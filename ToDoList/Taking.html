@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes-Taking Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .note-input {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #4facfe;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #00b4d8;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0077b6;
+        }
+
+        .notes-list {
+            margin-top: 20px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .note {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+
+        .delete-btn {
+            background: #e63946;
+            border: none;
+            padding: 5px 10px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #d62828;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Notes-Taking Application</h1>
+        <div class="note-input">
+            <input type="text" id="noteInput" placeholder="Enter a note...">
+            <button id="addNoteBtn">Add Note</button>
+        </div>
+        <ul id="notesList" class="notes-list"></ul>
+    </div>
+
+    <script>
+        const addNoteBtn = document.getElementById('addNoteBtn');
+        const noteInput = document.getElementById('noteInput');
+        const notesList = document.getElementById('notesList');
+
+        function addNote() {
+            const noteText = noteInput.value.trim();
+            if (noteText === '') {
+                alert('Please enter a note!');
+                return;
+            }
+
+            const noteItem = document.createElement('li');
+            noteItem.className = 'note';
+            noteItem.innerHTML = `
+                <span>${noteText}</span>
+                <button class="delete-btn">Delete</button>
+            `;
+
+            notesList.appendChild(noteItem);
+            noteInput.value = '';
+
+            const deleteBtn = noteItem.querySelector('.delete-btn');
+            deleteBtn.addEventListener('click', () => {
+                notesList.removeChild(noteItem);
+            });
+        }
+
+        addNoteBtn.addEventListener('click', addNote);
+
+        noteInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                addNote();
+            }
+        });
+    </script>
+</body>
+</html>
